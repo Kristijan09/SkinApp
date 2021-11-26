@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import CategoriesCard from "./Components/CategoriesCard";
+import MasterCard from "./Components/MasterCard";
+import { LAUNCHES_QUERY } from "./LaunchesQuery";
+import { useQuery } from "@apollo/client";
+import { useState } from "react";
+import SubcategoriesCard from "./Components/SubcategoriesCard";
 
 function App() {
+  const { data } = useQuery(LAUNCHES_QUERY);
+
+  const [categories, setCategories] = useState();
+  const [subCategories, setSubCategories] = useState();
+
+  // useEffect(() => {
+  //   data && setOriginalData(data.master_categories);
+  // }, [data]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <MasterCard masterData={data} setCategories={setCategories} />
+      <div className='main'>
+        <CategoriesCard
+          categories={categories}
+          setSubCategories={setSubCategories}
+        />
+        <SubcategoriesCard subCategories={subCategories} />
+      </div>
     </div>
   );
 }
+/*
 
+      */
 export default App;
